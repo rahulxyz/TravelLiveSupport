@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
             // Log.d(tag,""+s);
             if(jsonData!= null && jsonData!="") {
                 Log.d(TAG,"JsonData ->\n "+jsonData);
+                new ParserTask().execute(jsonData);
             }else{
                 showErrorMessage();
             }
