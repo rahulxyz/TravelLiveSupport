@@ -1,6 +1,7 @@
 package com.example.raul_will.travellivesupport;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -47,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
         new FetchData().execute(url);
     }
 
+    public void openMapActivity(){
+        Intent intent = new Intent(mContext,MapActivity.class);
+        startActivity(intent);
+    }
+
     private void clearScreen(){
         mErrorMsg.setVisibility(View.INVISIBLE);
     }
@@ -80,10 +86,9 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String jsonData) {
 
             mProgressBar.setVisibility(View.INVISIBLE);
-            // Log.d(tag,""+s);
             if(jsonData!= null && jsonData!="") {
-                Log.d(TAG,"JsonData ->\n "+jsonData);
                 new ParserTask().execute(jsonData);
+                openMapActivity();
             }else{
                 showErrorMessage();
             }

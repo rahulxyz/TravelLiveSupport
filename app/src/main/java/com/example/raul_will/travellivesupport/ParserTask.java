@@ -33,31 +33,25 @@ public class ParserTask extends AsyncTask<String,Void,List<List<HashMap<String,S
 
         try {
             JSONObject parent= new JSONObject(s);
-            Log.d("Main","output parent-> \n"+parent+"");
 
             JSONArray routes = parent.getJSONArray("routes");
-            Log.d("Main","output route-> \n"+routes);
 
             for(int i=0;i< routes.length();i++) {
                 List path =new ArrayList<>();
                 JSONObject object= routes.getJSONObject(i);
-                Log.d("Main","object-->"+object);
 
                 JSONArray legs= object.getJSONArray("legs");
                 for(int j=0;j< legs.length();j++) {
                     JSONObject object1= legs.getJSONObject(j);
-                   // Log.d("Main","object1-->"+object1);
 
                     JSONArray steps= object1.getJSONArray("steps");
                     for(int k=0;k< steps.length();k++) {
 
                         JSONObject object2 = steps.getJSONObject(k
                         );
-                        //Log.d("Main",k+ ") object2-->" + object2);
 
-                        JSONObject end_location,start_location,polyline;
-                        end_location= object2.getJSONObject("end_location");
-                        start_location=object2.getJSONObject("start_location");
+                        JSONObject polyline;
+
                         polyline= object2.getJSONObject("polyline");
                         List<LatLng> var = PolyUtil.decode(polyline.getString("points"));
 
@@ -68,11 +62,7 @@ public class ParserTask extends AsyncTask<String,Void,List<List<HashMap<String,S
                                 path.add(hm);
                             }
 
-                        /*hm.put("start",start_location);
-                        hm.put("end", end_location);*/
-
-                       // Log.d("Main",k+")\nend-> "+end_location+"\nstart-> "+start_location+"\npolyline-> "+polyline+"\n-----------");
-                    }
+                      }
                 }
                 route.add(path);
             }
@@ -90,7 +80,6 @@ public class ParserTask extends AsyncTask<String,Void,List<List<HashMap<String,S
 
         try {
             allpoints= getPoints(lists);
-            Log.d("Main","PolyPoints Done. Size= "+allpoints.size());
         } catch (JSONException e) {
             e.printStackTrace();
         }
